@@ -1,13 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import todoReducer from './todoSlice';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+
+//Se crea la tienda con ReduxToolKit --> Acceso global a los datos de la aplicación
+//Se configura la Store pasando un objeto que le indica el reducer que debe utilizar y su nombre
+const store = configureStore({
+  reducer: {
+    todos: todoReducer,
+  },
+});
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <Provider store={store}>
     <App />
+    </Provider>
   </React.StrictMode>
 );
 
