@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addTarea, deleteTarea, editTarea } from './todoSlice';
+import { addTarea, checkBox, deleteTarea, editTarea } from './todoSlice';
 //CSS files
 import './App.css';
 
@@ -22,7 +22,6 @@ function App() {
 
 
   const [tarea, setTarea] = useState('');
-  const [editedTarea, setEditTarea] = useState('');
 
   const handleAñadir = () => {
   //Verifica que el campo no este vacio y dispara la acción
@@ -31,6 +30,7 @@ function App() {
       const nuevaTarea = {
         id: Date.now(),
         texto: tarea,
+        valorAnterior:tarea
       };
       dispatch(addTarea(nuevaTarea));
       setTarea('');
@@ -42,14 +42,22 @@ function App() {
     dispatch(deleteTarea(id));
   };
 
-  const handleEditar = (id, input) => {
+  const handleEditar = (id) => {
   //Localiza la tarea y actualiza su texto (NO funciona)
+    const input2 = prompt("Introduce los nuevos datos");
     const editedTodo = {
       id,
-      texto: input,
+      texto: input2,
     };
     dispatch(editTarea(editedTodo));
   };
+  const handleCheckBox = (id,check) =>{
+    const editedTodo = {
+      id,
+      checked:check,
+    };
+    dispatch(checkBox(editedTodo));
+  } 
 
   return (
     <div className="indexApp">
@@ -62,10 +70,14 @@ function App() {
       />
       <button onClick={handleAñadir}>{metadata.constantes.addButton}</button>
       <ul>
+
         {tareas.map((tarea) => (
           <li key={tarea.id}>
+            <input
+        type="checkbox"
+        onChange={(e) => handleCheckBox(tarea.id,e.target.checked,tarea.texto)}/>
             {tarea.texto}
-            <button onClick={() => handleEditar(tarea.id, tarea.texto)}>
+            <button onClick={() => handleEditar(tarea.id)}>
               {metadata.constantes.editButton}
             </button>
             <button onClick={() => handleBorrar(tarea.id)}>{metadata.constantes.deleteButton}</button>
