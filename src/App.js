@@ -24,9 +24,9 @@ function App() {
   const [tarea, setTarea] = useState('');
 
   const handleAñadir = () => {
-  //Verifica que el campo no este vacio y dispara la acción
+  //Verifica que el campo no este vacio,elimina los espacios y dispara la acción
   //El Date.now() se utiliza para generar un identificador unico basado en el tiempo de creación de la tarea
-    if (tarea !== '') {
+    if (tarea.trim() !== '') {
       const nuevaTarea = {
         id: Date.now(),
         texto: tarea,
@@ -43,13 +43,15 @@ function App() {
   };
 
   const handleEditar = (id) => {
-  //Localiza la tarea y actualiza su texto (NO funciona)
-    const input2 = prompt("Introduce los nuevos datos");
+  //Localiza la tarea y actualiza su texto
+  //Verifica si el nuevo campo contiene texto, ademas elimina los espacios en blanco
+    const input2 = prompt("Introduce los nuevos datos").trim();
+    if (input2 !== '') {
     const editedTodo = {
       id,
       texto: input2,
     };
-    dispatch(editTarea(editedTodo));
+    dispatch(editTarea(editedTodo));}
   };
   const handleCheckBox = (id,check) =>{
     const editedTodo = {

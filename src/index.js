@@ -13,6 +13,24 @@ const store = configureStore({
     todos: todoReducer,
   },
 });
+// Función para cambiar el título de la pestaña
+const changeTabTitle = (text) => {
+  document.title = text;
+};
+
+// // Evento visibilitychange: se activa cuando se cambia entre pestañas o se minimiza la ventana del navegador
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "hidden") {
+    changeTabTitle("Vuelve a esta pestaña!");
+  }
+  else{
+    changeTabTitle("To-Do-App")
+  }
+});
+// Evento blur: se activa cuando la pestaña pierde el enfoque
+window.addEventListener("blur", (e) => {
+  changeTabTitle();
+});
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

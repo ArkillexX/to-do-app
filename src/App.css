@@ -39,7 +39,11 @@ body{
     height: 2.5em;
 }
 .indexApp button:hover{
-  animation: hoverEff 2s ease 0s 1 normal none;
+    animation: hoverEff 2s ease 0s 1 normal none;
+}
+.indexApp input{
+    border: none;
+    text-align: center;
 }
 .indexApp ul{
   color:var(--dark);
